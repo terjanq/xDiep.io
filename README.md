@@ -10,7 +10,7 @@ Extension for Diep.io game
 ####Instalation:
 1. Install [Tampermonkey](https://tampermonkey.net/)
 2. Install [xdiep.user.js](https://github.com/terjanq/xDiep.io/raw/master/xdiep.user.js)
-3. Open [diep.io](http://diep.io tab) :)
+3. Open [diep.io](http://diep.io) tab :)
 
 
 Website: [diephack.tk](http://diephack.tk)
