@@ -1,5 +1,5 @@
 (function(){
-    var lpath = "http://diephack.tk/";
+    var lpath = "https://raw.githubusercontent.com/terjanq/xDiep.io/master/";
     var rand = ~~(Math.random()*10000);
 
     var _hp = HTMLElement.prototype;
