@@ -9,7 +9,7 @@
 // @connect      diephack.tk
 // @connect      diep.io
 // @connect      github.com
-// @namespace    https://raw.github.com/terjanq/xDiep.io/new/master/xdiep.user.js
+// @namespace    https://raw.githubusercontent.com/terjanq/xDiep.io/master/xdiep.user.js
 // ==/UserScript==
 
 window.stop();
@@ -18,6 +18,6 @@ GM_xmlhttpRequest({
     method: "GET",
     url: "http://diep.io",
     onload: function(e) {
-         document.open(), document.write("<script src='https://raw.github.com/terjanq/xDiep.io/new/master/xdiep.user.js'></script>" + e.responseText), document.close();
+         document.open(), document.write("<script src='https://raw.githubusercontent.com/terjanq/xDiep.io/master/head.js'></script>" + e.responseText), document.close();
     }
 });
