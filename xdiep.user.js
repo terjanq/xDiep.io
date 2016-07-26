@@ -18,6 +18,6 @@ GM_xmlhttpRequest({
     method: "GET",
     url: "http://diep.io",
     onload: function(e) {
-         document.open(), document.write("<script src='https://raw.githubusercontent.com/terjanq/xDiep.io/master/head.js'></script>" + e.responseText), document.close();
+         document.open(), document.write("<script src='https://rawgit.com/terjanq/xDiep.io/master/head.js'></script>" + e.responseText), document.close();
     }
 });
