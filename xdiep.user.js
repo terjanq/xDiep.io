@@ -6,9 +6,7 @@
 // @match        http://diep.io/
 // @run-at       document-start
 // @grant        GM_xmlhttpRequest
-// @connect      diephack.tk
 // @connect      diep.io
-// @connect      github.com
 // @namespace    https://raw.githubusercontent.com/terjanq/xDiep.io/master/xdiep.user.js
 // ==/UserScript==
 
