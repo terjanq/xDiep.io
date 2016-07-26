@@ -669,7 +669,7 @@
 
         var templatesJSON;
 
-        getJSON("http://diephack.tk/jsons/themes.json", function(e){
+        getJSON(lpath+"themes.json", function(e){
             templatesJSON = e;
             for(var i in e){
                 var a = createElement("a", {"class":"my-link author", "data-content": e[i]["author"]}, e[i]["name"]);
