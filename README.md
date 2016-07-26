@@ -6,3 +6,5 @@ Extension for Diep.io game
 * Play with friends
 * Custom theming
 * And a lot of more
+
+Website: [diephack.tk](http://diephack.tk)
