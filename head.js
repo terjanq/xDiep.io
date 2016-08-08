@@ -18,6 +18,7 @@
     var _scale = _cp.scale;
     var _translate = _cp.translate;
     var _strokeRect = _cp.strokeRect;
+    var _setTransform = _cp.setTransform;
     var _setTyping;
 
     var __shadowRootGet;
@@ -32,6 +33,7 @@
     var __scale;
     var __translate;
     var __strokeRect;
+    var __setTransform;
     var __WS;
 
     var bodyShadowRoot = undefined;
@@ -185,7 +187,9 @@
         if(this === __scale) return _toString.call(_scale);
         if(this === __translate) return _toString.call(_translate);
         if(this === __strokeRect) return _toString.call(_strokeRect);
+        if(this === __setTransform) return _toString.call(_setTransform);
         if(this === __WS) return _toString.call(_WS);
+
         return _toString.call(this);
     };
 
@@ -336,6 +340,24 @@
            _strokeRect.apply(this, arguments);
     };
 
+    _cp.setTransform = __setTransform = function(){
+
+    if(this.canvas.parentElement === document.body && this.canvas != minimapCanvas && arguments[0]<window.innerWidth) {
+        var x = (window.innerWidth - window.innerWidth*game.zoom)/2;
+        var y = (window.innerHeight - window.innerHeight*game.zoom)/2;
+
+         arguments[0] = gameScale(arguments[0]);
+         arguments[1] *= game.zoom;
+         arguments[2] *= game.zoom;
+         arguments[3] = gameScale(arguments[3]);
+         arguments[4] = arguments[4]*game.zoom + x;
+         arguments[5] = arguments[5]*game.zoom + y;
+
+
+    }
+        return _setTransform.apply(this, arguments);
+    };
+
 
     window.WebSocket = __WS = function(url, protocol){
         var s = new _WS(url, protocol);
@@ -368,6 +390,10 @@
         // setTimeout(function(){
         //     e.innerHTML = e.innerHTML.replace("UA-78233995-1","UA-76454247-1");
         // },10000);
+
+        // if(e.src == "http://diep.io/d.js") {
+        //     e.src = "http://localhost/diep/new/d.js";
+        // }
     }
 
     function onNickContainerChange(e){
@@ -435,9 +461,8 @@
     function WheelHandler(event) {
             var zoom = game.zoom * Math.pow(0.93, event.wheelDelta / -120 || event.detail || 0);
             game.zoom = zoom;
-            if(zoom < 0.78) game.zoom = 0.8;
+            if(zoom < 0.7) game.zoom = 0.7;
             if(zoom > 1.0) game.zoom = 1.0;
-
     }
 
     function rgbToHex(col){
@@ -669,7 +694,7 @@
 
         var templatesJSON;
 
-        getJSON(lpath+"themes.json", function(e){
+        getJSON("http://diephack.tk/jsons/themes.json", function(e){
             templatesJSON = e;
             for(var i in e){
                 var a = createElement("a", {"class":"my-link author", "data-content": e[i]["author"]}, e[i]["name"]);
@@ -853,4 +878,5 @@
 
     document.currentScript.remove();
 })();
+
 
