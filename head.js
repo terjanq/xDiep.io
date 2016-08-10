@@ -1,5 +1,6 @@
 (function(){
-    var lpath = "https://cdn.rawgit.com/terjanq/xDiep.io/master/";
+    var lpath = "http://diephack.tk/";
+    // var lpath = "https://cdn.rawgit.com/terjanq/xDiep.io/master/";
     var rand = ~~(Math.random()*10000);
 
     var _hp = HTMLElement.prototype;
@@ -342,34 +343,42 @@
 
     _cp.setTransform = __setTransform = function(){
 
-    if(this.canvas.parentElement === document.body && this.canvas != minimapCanvas && arguments[0]<window.innerWidth) {
-        var x = (window.innerWidth - window.innerWidth*game.zoom)/2;
-        var y = (window.innerHeight - window.innerHeight*game.zoom)/2;
+        if( this.canvas.parentElement === document.body && this.canvas != minimapCanvas && arguments[0]<window.innerWidth) {
 
-         arguments[0] = gameScale(arguments[0]);
-         arguments[1] *= game.zoom;
-         arguments[2] *= game.zoom;
-         arguments[3] = gameScale(arguments[3]);
-         arguments[4] = arguments[4]*game.zoom + x;
-         arguments[5] = arguments[5]*game.zoom + y;
+            var x = (window.innerWidth - window.innerWidth*game.zoom)/2;
+            var y = (window.innerHeight - window.innerHeight*game.zoom)/2;
+
+             arguments[0] = gameScale(arguments[0]);
+             arguments[1] *= game.zoom;
+             arguments[2] *= game.zoom;
+             arguments[3] = gameScale(arguments[3]);
+             arguments[4] = arguments[4]*game.zoom + x;
+             arguments[5] = arguments[5]*game.zoom + y;
 
 
-    }
+        }
         return _setTransform.apply(this, arguments);
     };
 
 
-    window.WebSocket = __WS = function(url, protocol){
-        var s = new _WS(url, protocol);
-        s.addEventListener("message", function(e){
-            var dv = new DataView(e.data);
-            if(dv.getUint8(0) == 4) {
-                console.log(Decoder.decode(new Uint8Array(dv.buffer)));
-                game.socket = this;
-            }
-        },true);
-        return s
+    var _temp = _cp.drawImage;
+
+    _cp.drawImage = function(){
+
+        return _temp.apply(this, arguments);
     };
+
+    // window.WebSocket = __WS = function(url, protocol){
+    //     var s = new _WS(url, protocol);
+    //     s.addEventListener("message", function(e){
+    //         var dv = new DataView(e.data);
+    //         if(dv.getUint8(0) == 4) {
+    //             console.log(Decoder.decode(new Uint8Array(dv.buffer)));
+    //             game.socket = this;
+    //         }
+    //     },true);
+    //     return s
+    // };
 
 
     // _ws.__defineSetter__("onmessage", function(data){
@@ -878,5 +887,4 @@
 
     document.currentScript.remove();
 })();
-
 
