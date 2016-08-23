@@ -516,7 +516,6 @@
         xhr.open('GET', url, true);
         xhr.responseType = 'json';
         xhr.onload = function() {
-            console.log(xhr);
           if (xhr.status == 200) {
             callback(xhr.response);
           }
