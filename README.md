@@ -12,6 +12,3 @@ Extension for Diep.io game
 2. Install [Tampermonkey](https://tampermonkey.net/)
 3. Install [xdiep.user.js](https://github.com/terjanq/xDiep.io/raw/master/xdiep.user.js)
 4. Open [diep.io](http://diep.io) tab :)
-
-
-Website: [diephack.tk](http://diephack.tk)
