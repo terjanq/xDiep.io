@@ -1,6 +1,5 @@
 (function(){
-    var lpath = "http://diephack.tk/";
-    // var lpath = "https://cdn.rawgit.com/terjanq/xDiep.io/master/";
+    var lpath = "https://cdn.rawgit.com/terjanq/xDiep.io/1.0/";
     var rand = ~~(Math.random()*10000);
 
     var _hp = HTMLElement.prototype;
@@ -63,7 +62,7 @@
 
 
 
-    var creatorSpan = createElement("span", {"style": "font-size: 14px; position:absolute; bottom:2px; right:6px;"}, 'Made by <a style="text-decoration:none; color:red" href="http://diephack.tk" target="_blank">diephack.tk</a>');
+    var creatorSpan = createElement("span", {"style": "font-size: 14px; position:absolute; bottom:2px; right:6px;"}, 'Made by <a style="text-decoration:none; color:red" href="https://github.com/terjanq/xDiep.io" target="_blank">terjanq</a>');
     var minimapCanvas = createElement("canvas", {"class": "minimap"});
     var minimapCtx = minimapCanvas.getContext("2d");
 
@@ -517,6 +516,7 @@
         xhr.open('GET', url, true);
         xhr.responseType = 'json';
         xhr.onload = function() {
+            console.log(xhr);
           if (xhr.status == 200) {
             callback(xhr.response);
           }
@@ -699,7 +699,7 @@
 
         var templatesJSON;
 
-        getJSON("http://diephack.tk/jsons/themes.json", function(e){
+        getJSON(lpath + "themes.json", function(e){
             templatesJSON = e;
             for(var i in e){
                 var a = createElement("a", {"class":"my-link author", "data-content": e[i]["author"]}, e[i]["name"]);
