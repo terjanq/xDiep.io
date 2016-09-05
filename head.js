@@ -5,6 +5,7 @@
     var _hp = HTMLElement.prototype;
     var _cp = CanvasRenderingContext2D.prototype;
     var _WS = WebSocket;
+    var _Int32Array = window.Int32Array;
 
     var _toString = Function.prototype.toString;
     var _shadowRootGet = _hp.__lookupGetter__('shadowRoot');
@@ -20,7 +21,6 @@
     var _strokeRect = _cp.strokeRect;
     var _setTransform = _cp.setTransform;
     var _setTyping;
-
     var __shadowRootGet;
     var __createShadowRoot;
     var __toString;
@@ -35,6 +35,7 @@
     var __strokeRect;
     var __setTransform;
     var __WS;
+    var __Int32Array;
 
     var bodyShadowRoot = undefined;
 
@@ -189,7 +190,7 @@
         if(this === __strokeRect) return _toString.call(_strokeRect);
         if(this === __setTransform) return _toString.call(_setTransform);
         if(this === __WS) return _toString.call(_WS);
-
+        if(this === __Int32Array) return _toString.call(_Int32Array);
         return _toString.call(this);
     };
 
@@ -376,10 +377,21 @@
     window.WebSocket.prototype = _WS.prototype;
 
 
+
+
     // _ws.__defineSetter__("onmessage", function(data){
     //     console.log(data);
     //     _wsOnmessage.call(this, data);
     // }); __wsOnmessage = _ws.__lookupSetter__("onmessage");
+
+
+    window.__arrays  = [];
+
+    window.Int32Array = __Int32Array = function(e){
+        var x = new _Int32Array(e);
+        __arrays.push(x);
+        return x;
+    };
 
      window.addEventListener("keyup", function(e) {
         switch(e.key){
