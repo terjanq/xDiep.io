@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         xDiep.io (github)
 // @description  Diep.io extension (sectored-minimap, zoom, play-with-friends, custom-theming, kill counter)
-// @version      3.0
+// @version      3.1
 // @author       terjanq
 // @match        http://diep.io/
 // @run-at       document-start
