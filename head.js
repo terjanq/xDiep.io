@@ -1,5 +1,5 @@
 (function(){
-    var lpath = "https://localhost/xdiep.io/";
+    var lpath = "https://terjanq.cf/xdiep.io/";
     var rand = ~~(Math.random()*10000);
 
     var _hp = HTMLElement.prototype;
@@ -174,12 +174,11 @@
 
     var observerConfig = { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] };
 
-    window.alert = function(){debugger; console.log('alert')};
-    Function.prototype.toString = function toString(){
-        
+
+    Function.prototype.toString = function(){
         if(this === Function.prototype.toString) return _toString.call(_toString);
         if(this === __shadowRootGet) return _toString.call(_shadowRootGet);
-        // if(this === __createShadowRoot) return _toString.call(_createShadowRoot);
+        if(this === __createShadowRoot) return _toString.call(_createShadowRoot);
         if(this === __shadowHost) return _toString.call(_shadowHost);
         if(this === __fillText) return _toString.call(_fillText);
         if(this === __strokeText) return _toString.call(_strokeText);
@@ -192,8 +191,7 @@
         if(this === __setTransform) return _toString.call(_setTransform);
         if(this === __WS) return _toString.call(_WS);
         if(this === __Int32Array) return _toString.call(_Int32Array);
-
-        return _toString.apply(this, arguments);
+        return _toString.call(this);
     };
 
 
@@ -216,50 +214,24 @@
 
 
     function onBodyStart(e){
-        console.log('teeeeeeeeeeeeeeeeeerjanqqqqqqqqqqq');
-        myDoc = e.attachShadow({mode: 'closed'});
-         //`<content select="link"></content><content select="#fontdetectHelper"></content><content select="span"></content><content select="#canvas"></content><content select="#textInputContainer"></content><style> @import "`+lpath+`xdiep.css"; </style>`;
-        
-        //                             // <iframe id='_ga' class="ga" src="`+lpath+`ga.html"></iframe>`;
+        myDoc = document.createElement('div');
+	//myDoc = e.createShadowRoot();
+        myDoc.innerHTML = `<content select="link"></content><content select="#fontdetectHelper"></content><content select="span"></content><content select="#canvas"></content><content select="#textInputContainer"></content><style> @import "`+lpath+`xdiep.css"; </style>`;
+                                    // <iframe id='_ga' class="ga" src="`+lpath+`ga.html"></iframe>`;
     }
 
-    function createShadow(){
-        document.querySelector('#canvas').slot = 'canvas';
-        document.querySelector('#fontdetectHelper').slot = 'fontdetectHelper';
-        document.querySelector('#textInputContainer').slot = 'textInputContainer';
-        let links = Array.from(document.querySelectorAll('link'));
-        let res = `<style> @import "`+lpath+`xdiep.css"; </style>`
-        for(let i=0;i<links.length;i++){
-            let link = links[i];
-            link.slot = 'link'+i;
-            res += '<slot name=link'+i+'></slot>'
-        }
-
-        res += '<slot name=fontdetectHelper></slot><slot name=canvas></slot><slot name=textInputContainer></slot>';
-
-        myDoc.innerHTML = res;
-        
+    window.addEventListener("load", function(){
+        nickInput = document.getElementById("textInput");
+        canvas = document.getElementById("canvas");
         myDoc.appendChild(welcomeDiv);
         myDoc.appendChild(spanInfo);
         myDoc.appendChild(minimapCanvas);
 
         createCustomThemePopup();
-        myDoc.appendChild(customThemePopup);
-    }
-    
-    window.addEventListener("load", function(){
-        nickInput = document.getElementById("textInput");
-        canvas = document.getElementById("canvas");
-        
-        try{
-            createShadow()
-        }catch(e){
-            setTimeout(createShadow, 4000);
-        }
-        
-    
 
-        setTimeout(function(){ renderMinimap();}, 3000);
+        myDoc.appendChild(customThemePopup);
+
+       setTimeout(function(){ renderMinimap();}, 3000);
 
         document.body.addEventListener("mousewheel", WheelHandler, true);
 
@@ -274,24 +246,25 @@
 
 
 
-    //  _hp.__defineGetter__('shadowRoot', function(){
-    //         if(this === document.body)  return bodyShadowRoot;
-    //         return _shadowRootGet.call(this);
-    //     });
-    //  __shadowRootGet = _hp.__lookupGetter__('shadowRoot');
+     _hp.__defineGetter__('shadowRoot', function(){
+            if(this === document.body)  return bodyShadowRoot;
+            return _shadowRootGet.call(this);
+        });
+     __shadowRootGet = _hp.__lookupGetter__('shadowRoot');
 
 
-    // _hp.createShadowRoot = __createShadowRoot = function createShadowRoot(){
-    //     if(this === document.body && bodyShadowRoot === undefined) {
-    //         bodyShadowRoot = null;
-    //         return  _createShadowRoot.call(this);
-    //     }
-    //     var x = _createShadowRoot.call(fakeBody);
-    //     bodyShadowRoot = x;
-    //     return x;
-    // };
+    /*_hp.createShadowRoot = __createShadowRoot = function(){
+        return 1;
+	if(this === document.body && bodyShadowRoot === undefined) {
+            bodyShadowRoot = null;
+            return  _createShadowRoot.call(this);
+        }
+        var x = _createShadowRoot.call(fakeBody);
+        bodyShadowRoot = x;
+        return x;
+    };*/
 
-    _hp.focus = __focus = function focus(){
+    _hp.focus = __focus = function(){
         if(this === nickInput && game.preventFocus) return ;
         _focus.call(this);
     };
@@ -306,7 +279,7 @@
     var tempkilled = {};
     var name;
 
-    _cp.fillText= __fillText = function fillText() {
+    _cp.fillText= __fillText = function() {
           if(arguments[0].indexOf("You've killed") != -1) {
             name = arguments[0].split("You've killed")[1];
             if(!tempkilled[name]){
@@ -325,7 +298,7 @@
         _fillText.apply(this, arguments);
     };
 
-    _cp.strokeText= __strokeText = function strokeText() {
+    _cp.strokeText= __strokeText = function() {
         if(arguments[0].indexOf("Diep.io")!=-1) return;
         if(arguments[0].indexOf("players")!=-1) return;
         _strokeText.apply(this, arguments);
@@ -344,7 +317,7 @@
 
    var lastScale = [];
 
-    _cp.scale = __scale = function scale() {
+    _cp.scale = __scale = function() {
         if(game.theme.minimap && this.canvas.parentElement == null && arguments[0] > 50 && arguments[1]  > 50) {
             lastScale[0] = arguments[0];
             lastScale[1] = arguments[1];
@@ -359,18 +332,18 @@
     };
 
 
-    _cp.translate = __translate = function translate() {
+    _cp.translate = __translate = function() {
           if(game.theme.minimap && this.canvas.parentElement == null && Math.abs(window.innerWidth - lastScale[0] - arguments[0]) < window.innerWidth/20 && Math.abs(window.innerHeight - lastScale[1] - arguments[1]) < window.innerWidth/20  ) arguments[0] = window.innerWidth - game.theme.minimapSize + 7, arguments[1] = window.innerHeight - game.theme.minimapSize + 7;
 
           _translate.apply(this, arguments);
     };
 
-    _cp.strokeRect = __strokeRect = function strokeRect() {
+    _cp.strokeRect = __strokeRect = function() {
          if(game.theme.minimap && this.canvas.parentElement == null) { return; }
            _strokeRect.apply(this, arguments);
     };
 
-    _cp.setTransform = __setTransform = function setTransform(){
+    _cp.setTransform = __setTransform = function(){
 
         if( this.canvas.parentElement === document.body && this.canvas != minimapCanvas && arguments[0]<window.innerWidth) {
 
@@ -390,20 +363,20 @@
     };
 
 
-    // window.WebSocket = __WS = function WebSocket(url, protocol){
-    //     var s = new _WS(url, protocol);
-    //     s.addEventListener("message", function(e){
-    //         var dv = new DataView(e.data);
-    //         if(dv.getUint8(0) == 4) {
-    //             console.log(Decoder.decode(new Uint8Array(dv.buffer)));
-    //             game.socket = this;
-    //         }
-    //     },true);
-    //     return s
-    // };
+    window.WebSocket = __WS = function(url, protocol){
+        var s = new _WS(url, protocol);
+        s.addEventListener("message", function(e){
+            var dv = new DataView(e.data);
+            if(dv.getUint8(0) == 4) {
+                console.log(Decoder.decode(new Uint8Array(dv.buffer)));
+                game.socket = this;
+            }
+        },true);
+        return s
+    };
 
 
-    // window.WebSocket.prototype = _WS.prototype;
+    window.WebSocket.prototype = _WS.prototype;
 
 
 
@@ -414,13 +387,13 @@
     // }); __wsOnmessage = _ws.__lookupSetter__("onmessage");
 
 
-//     window.__arrays  = [];
+    window.__arrays  = [];
 
-//     window.Int32Array = __Int32Array = function(e){
-//         var x = new _Int32Array(e);
-//         __arrays.push(x);
-//         return x;
-//     };
+    window.Int32Array = __Int32Array = function(e){
+        var x = new _Int32Array(e);
+        __arrays.push(x);
+        return x;
+    };
 
      window.addEventListener("keyup", function(e) {
         switch(e.key){
@@ -482,9 +455,12 @@
     function styleHandler(rgb, b){
         if(!game.theme.dark && !game.theme.custom) return rgb;
         if(!b) b = "";
-        if(rgb.replace) rgb = rgb.replace(/\s/g, "");
-        else return rgb;
-
+        
+	try{
+		rgb = rgb.replace(/\s/g, "");
+	}catch(e){
+		return rgb;
+	}
         var replaced = (game.theme.custom ? game.theme.json["replaced"] : game.theme.darkColors);
         var def = (b=="!" ? "defaultStroke" : "defaultFill");
         var orygName = (game.theme.custom ? game.theme.json["dictionary"][b + rgb]: game.theme.originalColors[b + rgb]);
@@ -555,12 +531,10 @@
     }
 
     function getJSON(url, callback) {
-        console.log('dasdasda');
         var xhr = new XMLHttpRequest();
         xhr.open('GET', url, true);
         xhr.responseType = 'json';
         xhr.onload = function() {
-            console.log('123');
           if (xhr.status == 200) {
             callback(xhr.response);
           }
